@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:store/data/product.dart';
+import 'package:store/data/repo/product_repository.dart';
 import 'package:store/gen/assets.gen.dart';
 import 'package:store/mobile_screen.dart';
 import 'package:store/theme.dart';
@@ -14,6 +16,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    productRepository.getAll(ProductSort.priceHighToLow).then((value) {
+      debugPrint(value.toString());
+    }).catchError((e) {
+      debugPrint(e.toString());
+    });
     final TextStyle defaultTextStyle = TextStyle(
         fontFamily: 'IranYekan', color: LightThemeColor.primaryTextColor);
     return MaterialApp(
@@ -60,13 +67,17 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               'سلام فلاتر',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            FloatingActionButton(onPressed: () {},child: Icon(CupertinoIcons.add),)
+            FloatingActionButton(
+              onPressed: () {},
+              child: Icon(CupertinoIcons.add),
+            )
           ],
         ),
       ),
