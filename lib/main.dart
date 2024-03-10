@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:store/data/product.dart';
+import 'package:store/data/repo/banner_repository.dart';
 import 'package:store/data/repo/product_repository.dart';
 import 'package:store/gen/assets.gen.dart';
 import 'package:store/mobile_screen.dart';
@@ -21,6 +22,13 @@ class MyApp extends StatelessWidget {
     }).catchError((e) {
       debugPrint(e.toString());
     });
+
+    bannerRepository.getAll().then((value) {
+      debugPrint(value.toString());
+    }).catchError((e) {
+      debugPrint(e.toString());
+    });
+
     final TextStyle defaultTextStyle = TextStyle(
         fontFamily: 'IranYekan', color: LightThemeColor.primaryTextColor);
     return MaterialApp(
