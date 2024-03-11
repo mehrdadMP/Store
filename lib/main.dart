@@ -6,6 +6,7 @@ import 'package:store/data/repo/product_repository.dart';
 import 'package:store/gen/assets.gen.dart';
 import 'package:store/mobile_screen.dart';
 import 'package:store/theme.dart';
+import 'package:store/ui/home/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
       ),
       home: XiaomiNote9S(
         home:
-            Directionality(textDirection: TextDirection.rtl, child: HomePage()),
+            Directionality(textDirection: TextDirection.rtl, child: HomeScreen()),
         enableStatusBar: true,
       ),
     );
