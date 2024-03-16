@@ -1,13 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/data/repo/banner_repository.dart';
 import 'package:store/data/repo/product_repository.dart';
 import 'package:store/gen/assets.gen.dart';
+import 'package:store/ui/Widgets/slider.dart';
 import 'package:store/ui/home/bloc/home_bloc.dart';
+import 'package:store/ui/Widgets/horizontal_list_view.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final Size screenSize;
+  final EdgeInsetsGeometry padding = const EdgeInsets.only(left: 20, right: 20);
+  const HomeScreen({super.key, required this.screenSize});
 
   @override
   Widget build(BuildContext context) {
@@ -37,18 +40,41 @@ class HomeScreen extends StatelessWidget {
                       case 1:
                         Container();
                       case 2:
-                        Container();
+                        return BannerSlider(
+                          screenSize: screenSize,
+                          padding: padding,
+                          borderRadius: BorderRadius.circular(20),
+                          banners: state.banners,
+                        );
+                      case 3:
+                        return HorizontalListView(
+                          screenSize: screenSize,
+                          padding: padding,
+                          title: 'جدیدترین',
+                          products: state.products,
+                        );
+                      case 4:
+                        return HorizontalListView(
+                          screenSize: screenSize,
+                          padding: padding,
+                          title: 'پربازدیدترین',
+                          products: state.popularProducts,
+                        );
                     }
                     return Container();
                   },
                 );
               } else if (state is HomeLoading) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (state is HomeError) {
                 return Center(
-                  child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(state.appException.message),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       ElevatedButton(
                           onPressed: () {
                             BlocProvider.of<HomeBloc>(context)

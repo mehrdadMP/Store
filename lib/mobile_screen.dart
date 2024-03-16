@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,9 +14,7 @@ class XiaomiNote9S extends StatelessWidget {
     required this.home,
     this.debugShowCheckedModeBanner = true,
     required this.enableStatusBar,
-  }) {
-    ;
-  }
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class XiaomiNote9S extends StatelessWidget {
           height: 872.7272727272727,
           decoration: BoxDecoration(
               color: Colors.white,
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   blurRadius: 35,
                   spreadRadius: 5,
@@ -72,17 +73,19 @@ class _Home extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: enableStatusBar
-                ? BorderRadius.only(
+                ? const BorderRadius.only(
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30))
                 : BorderRadius.circular(30)),
         child: ClipRRect(
           borderRadius: enableStatusBar
-              ? BorderRadius.only(
+              ? const BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30))
               : BorderRadius.circular(30),
-          child: MaterialApp(theme: Theme.of(context),
+          child: MaterialApp(
+              theme: Theme.of(context),
+              scrollBehavior: AppScrollBehavior(),
               debugShowCheckedModeBanner: debugShowCheckedModeBanner,
               home: Scaffold(body: home)),
         ),
@@ -120,10 +123,7 @@ class _StatusBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            '2:27 PM | 1.8KB/s',
-            style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),
-          ),
+          _TimeAndNetworkBitRate(),
           Row(
             children: [
               Icon(
@@ -145,11 +145,64 @@ class _StatusBar extends StatelessWidget {
               SizedBox(
                 width: 5,
               ),
-              Text('67%', style: TextStyle(fontSize: 13,fontWeight: FontWeight.w600))
+              Text('67%',
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600))
             ],
           )
         ],
       ),
+    );
+  }
+}
+
+class _TimeAndNetworkBitRate extends StatefulWidget {
+  const _TimeAndNetworkBitRate({
+    super.key,
+  });
+
+  @override
+  State<_TimeAndNetworkBitRate> createState() => _TimeAndNetworkBitRateState();
+}
+
+class _TimeAndNetworkBitRateState extends State<_TimeAndNetworkBitRate> {
+  DateTime now = DateTime.now();
+  Random _networkSpeed = Random();
+  int second = 0;
+  double downloadRate = 0;
+  @override
+  void initState() {
+    //Set a random networkSpeed just for better UI Experience.
+    Timer.periodic(const Duration(seconds: 5), (timer) {
+      setState(() {
+        downloadRate = _networkSpeed.nextDouble() * 50;
+      });
+    });
+
+    //Here we compute the time.First we set [second] by realTime second using
+    //[now.second] then Every 1 sec, [second] will add one by one until reach
+    //60, then it will call [setState] to rebuild widget and set [now] new
+    //on UI.
+    second = now.second;
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      second++;
+      if (second == 60) {
+        setState(() {
+          second = 0;
+          now = DateTime.now();
+        });
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      '''${now.hour >= 0 && now.hour <= 9 ? '0${now.hour}' : '${now.hour - 12}'}'''
+      ''':${now.minute >= 0 && now.minute <= 9 ? '0${now.minute}' : now.minute}'''
+      ''' ${now.hour >= 0 && now.hour <= 12 ? 'AM' : 'PM'} | '''
+      '''${downloadRate == 0 || downloadRate == 0.00 ? '0.0' : downloadRate.toStringAsFixed(2)}KB/s''',
+      style: const TextStyle(fontSize: 14.4, fontWeight: FontWeight.w600),
     );
   }
 }
@@ -175,7 +228,7 @@ class _PhoneFrontCamera extends StatelessWidget {
   }
 }
 
-class ScreenSize {
+class MobileScreenSize {
   static Size _xiaomiNote9S = Size.zero;
 
   static Size setXiaomiNote9sScreenSize({bool enableStatusBar = false}) {
@@ -183,4 +236,13 @@ class ScreenSize {
         enableStatusBar ? (872.7272727272727 - 35) : 872.7272727272727);
     return _xiaomiNote9S;
   }
+}
+
+class AppScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad,
+      };
 }
