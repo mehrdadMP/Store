@@ -9,33 +9,30 @@
 
 import 'package:flutter/widgets.dart';
 
-class $AssetsFontsGen {
-  const $AssetsFontsGen();
-
-  /// File path: assets/fonts/IRANYekanX-Bold.ttf
-  String get iRANYekanXBold => 'assets/fonts/IRANYekanX-Bold.ttf';
-
-  /// File path: assets/fonts/IRANYekanX-Regular.ttf
-  String get iRANYekanXRegular => 'assets/fonts/IRANYekanX-Regular.ttf';
-
-  /// List of all assets
-  List<String> get values => [iRANYekanXBold, iRANYekanXRegular];
-}
-
 class $AssetsImgGen {
   const $AssetsImgGen();
+
+  /// File path: assets/img/nike-shoe.png
+  AssetGenImage get nikeShoe => const AssetGenImage('assets/img/nike-shoe.png');
+
+  /// File path: assets/img/nike-shoe2.png
+  AssetGenImage get nikeShoe2 =>
+      const AssetGenImage('assets/img/nike-shoe2.png');
+
+  /// File path: assets/img/nike-white.png
+  AssetGenImage get nikeWhite =>
+      const AssetGenImage('assets/img/nike-white.png');
 
   /// File path: assets/img/nike.png
   AssetGenImage get nike => const AssetGenImage('assets/img/nike.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [nike];
+  List<AssetGenImage> get values => [nikeShoe, nikeShoe2, nikeWhite, nike];
 }
 
 class Assets {
   Assets._();
 
-  static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsImgGen img = $AssetsImgGen();
 }
 

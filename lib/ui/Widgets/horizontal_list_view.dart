@@ -42,11 +42,8 @@ class HorizontalListView extends StatelessWidget {
                     .copyWith(fontSize: 16, fontWeight: FontWeight.w700),
               ),
               TextButton(
-                  style: ButtonStyle(
-                      overlayColor:
-                          MaterialStateProperty.all(Colors.transparent),
-                      padding: MaterialStateProperty.all(EdgeInsets.all(0))),
-                  onPressed: onTap,
+                  style: textButtonStyle,
+                  onPressed: onTap!=null ?onTap:(){},
                   child: Text('مشاهده‌ی همه')),
             ],
           ),

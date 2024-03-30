@@ -10,11 +10,11 @@ sealed class HomeState extends Equatable {
 final class HomeLoading extends HomeState {}
 
 final class HomeError extends HomeState {
-  final AppException appException;
+  final AppException exception;
 
-  const HomeError({required this.appException});
+  const HomeError({required this.exception});
   @override
-  List<Object> get props => [appException];
+  List<Object> get props => [exception];
 }
 
 class HomeSuccess extends HomeState {

@@ -15,7 +15,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -38,9 +37,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         textTheme: TextTheme(
-            bodyMedium: defaultTextStyle.copyWith(fontWeight: FontWeight.w500,fontSize: 13),
+            bodyMedium: defaultTextStyle.copyWith(
+                fontWeight: FontWeight.w500, fontSize: 13),
             bodySmall: defaultTextStyle.copyWith(
-                color: LightThemeColor.secondaryTextColor,fontSize: 12),
+                color: LightThemeColor.secondaryTextColor, fontSize: 12),
             titleMedium: defaultTextStyle.copyWith(
                 fontWeight: FontWeight.normal,
                 fontSize: 16,
@@ -57,6 +57,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: XiaomiNote9S(
+        debugShowCheckedModeBanner: false,
         home: Directionality(
             textDirection: TextDirection.rtl,
             child: HomeScreen(
