@@ -1,8 +1,5 @@
 import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/common/utils.dart';
 import 'package:store/data/repo/banner_repository.dart';
@@ -24,9 +21,8 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: BlocProvider<HomeBloc>(
           create: (context) {
-            final homeBloc = HomeBloc(
-                bannerRepository: bannerRepository,
-                productRepository: productRepository);
+            final homeBloc =
+                HomeBloc(bannerRepository: bannerRepository, productRepository: productRepository);
             homeBloc.add(HomeStarted());
             return homeBloc;
           },
@@ -59,8 +55,7 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 ClipRect(
                                     child: BackdropFilter(
-                                        filter: ImageFilter.blur(
-                                            sigmaX: 6.0, sigmaY: 6.0),
+                                        filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
                                         child: Image.asset(
                                           Assets.img.nikeShoe2.path,
                                           width: 50,
@@ -98,8 +93,7 @@ class HomeScreen extends StatelessWidget {
                               height: 10,
                             ),
                             ScrollConfiguration(
-                              behavior: ScrollConfiguration.of(context)
-                                  .copyWith(scrollbars: false),
+                              behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
                               child: Expanded(
                                 child: ListView.builder(
                                   physics: scrollPhysics,
@@ -123,7 +117,7 @@ class HomeScreen extends StatelessWidget {
                                         return HorizontalListView(
                                           screenSize: screenSize,
                                           padding: padding,
-                                          title: 'پربازدیدترین',
+                                          title: '$screenSizeپربازدیدترین',
                                           products: state.popularProducts,
                                         );
                                     }

@@ -9,11 +9,14 @@ class XiaomiNote9S extends StatelessWidget {
   final bool debugShowCheckedModeBanner;
   final bool enableStatusBar;
 
+  final TextDirection textDirextion;
+
   XiaomiNote9S({
     super.key,
     required this.home,
     this.debugShowCheckedModeBanner = true,
     required this.enableStatusBar,
+    required this.textDirextion,
   });
 
   @override
@@ -47,6 +50,7 @@ class XiaomiNote9S extends StatelessWidget {
               home: home,
               enableStatusBar: enableStatusBar,
               debugShowCheckedModeBanner: debugShowCheckedModeBanner,
+              textDirection: textDirextion,
             ),
           ]),
         ),
@@ -59,10 +63,13 @@ class _Home extends StatelessWidget {
   final bool enableStatusBar;
 
   final bool debugShowCheckedModeBanner;
+
+  final TextDirection textDirection;
   const _Home({
     required this.home,
     required this.enableStatusBar,
     required this.debugShowCheckedModeBanner,
+    required this.textDirection,
   });
 
   final Widget home;
@@ -74,20 +81,18 @@ class _Home extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: enableStatusBar
                 ? const BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30))
+                    bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30))
                 : BorderRadius.circular(30)),
         child: ClipRRect(
           borderRadius: enableStatusBar
               ? const BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30))
+                  bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30))
               : BorderRadius.circular(30),
           child: MaterialApp(
               theme: Theme.of(context),
               scrollBehavior: AppScrollBehavior(),
               debugShowCheckedModeBanner: debugShowCheckedModeBanner,
-              home: Scaffold(body: home)),
+              home: Directionality(textDirection: textDirection, child: Scaffold(body: home))),
         ),
       ),
     );
@@ -107,8 +112,8 @@ class _StatusBarShadow extends StatelessWidget {
           height: 35,
           decoration: const BoxDecoration(
               color: Color.fromARGB(52, 0, 0, 0),
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+              borderRadius:
+                  BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
         ));
   }
 }
@@ -145,8 +150,7 @@ class _StatusBar extends StatelessWidget {
               SizedBox(
                 width: 5,
               ),
-              Text('67%',
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600))
+              Text('67%', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600))
             ],
           )
         ],
@@ -219,8 +223,7 @@ class _PhoneFrontCamera extends StatelessWidget {
         height: 18,
         decoration: BoxDecoration(
             boxShadow: const [BoxShadow(blurRadius: 5)],
-            border: Border.all(
-                width: 6.5, color: const Color.fromARGB(134, 0, 0, 0)),
+            border: Border.all(width: 6.5, color: const Color.fromARGB(134, 0, 0, 0)),
             color: const Color.fromARGB(183, 133, 122, 122),
             borderRadius: BorderRadius.circular(50)),
       ),
@@ -232,8 +235,8 @@ class MobileScreenSize {
   static Size _xiaomiNote9S = Size.zero;
 
   static Size setXiaomiNote9sScreenSize({bool enableStatusBar = false}) {
-    _xiaomiNote9S = Size(392.72727272727275,
-        enableStatusBar ? (872.7272727272727 - 35) : 872.7272727272727);
+    _xiaomiNote9S =
+        Size(392.72727272727275, enableStatusBar ? (872.7272727272727 - 35) : 872.7272727272727);
     return _xiaomiNote9S;
   }
 }
