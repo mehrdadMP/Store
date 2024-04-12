@@ -42,10 +42,9 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.w500, fontSize: 12, color: LightThemeColor.primaryColor)),
         colorScheme: ColorScheme.light(
           primary: LightThemeColor.primaryColor,
-          onPrimary: LightThemeColor.primaryColor,
+          onPrimary: LightThemeColor.onPrimaryColor,
           secondary: LightThemeColor.secondaryColor,
           onSecondary: Colors.white,
-         
         ),
         useMaterial3: true,
       ),
@@ -57,13 +56,10 @@ class MyApp extends StatelessWidget {
           if (snapshot.data != null) {
             if (snapshot.data!.width > 0 && snapshot.data!.height > 0) {
               final Size mainScreenSize = snapshot.data!;
-              return XiaomiNote9S(
-                home: Directionality(textDirection: TextDirection.rtl,
-                child: AuthScreen()),
-                enableStatusBar: true,
-                debugShowCheckedModeBanner: false,
-                textDirextion: TextDirection.rtl,
-              );
+              return Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: RootScreen(screenSize: MobileScreenSize.setXiaomiNote9sScreenSize()))
+                ;
             } else {
               return Container();
             }

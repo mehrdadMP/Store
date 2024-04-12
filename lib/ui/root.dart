@@ -45,6 +45,7 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     return PopScope(
       canPop: true,
       onPopInvoked: (didPop) {
@@ -60,43 +61,80 @@ class _RootScreenState extends State<RootScreen> {
         }
       },
       child: Scaffold(
-        body: IndexedStack(
-          index: selectedScreenIndex,
+        body: Stack(
           children: [
-            _navigator(
-              _homeKey,
-              homeIndex,
-              HomeScreen(screenSize: widget.screenSize),
+            IndexedStack(
+              index: selectedScreenIndex,
+              children: [
+                _navigator(
+                  _homeKey,
+                  homeIndex,
+                  HomeScreen(screenSize: widget.screenSize),
+                ),
+                _navigator(
+                    _cartKey,
+                    cartIndex,
+                    Center(
+                      child: Text(
+                        'Cart Screen${widget.screenSize}',
+                      ),
+                    )),
+                _navigator(
+                    _profileKey,
+                    profileIndex,
+                    Center(
+                      child: Text('Profile Screen'),
+                    ))
+              ],
             ),
-            _navigator(
-                _cartKey,
-                cartIndex,
-                Center(
-                  child: Text(
-                    'Cart Screen${widget.screenSize}',
+            Positioned(
+              bottom: 20,
+              left: 20,
+              right: 20,
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: themeData.colorScheme.secondary),
+                child: ClipRRect(borderRadius: BorderRadius.circular(30),
+                         ///This [MediaQuery] widget lets add some padding at the bottom of 
+                         ///[BottomNavigationBar], set padding under it's [BottomNavigationBarItem]'s 
+                         ///[label]. If you set padding on [BottomNavigationBarItem]'s [Icon], it 
+                         ///will not set padding under it's label, just set padding on the top of Icon.
+                  child: MediaQuery(
+                    data: MediaQueryData(viewPadding: EdgeInsets.all(3)),
+                    child: BottomNavigationBar(
+                      elevation: 0,
+                      backgroundColor: Colors.transparent,
+                      unselectedItemColor: themeData.colorScheme.onSecondary,
+                      selectedItemColor: themeData.colorScheme.primary,
+                      currentIndex: selectedScreenIndex,
+                      onTap: (selectedTabIndex) {
+                        setState(() {
+                          _history.remove(selectedScreenIndex);
+                          _history.add(selectedScreenIndex);
+                          selectedScreenIndex = selectedTabIndex;
+                        });
+                      },
+                      items: const <BottomNavigationBarItem>[
+                        BottomNavigationBarItem(icon: Padding(
+                          padding: EdgeInsets.only(top: 3),
+                          child: Icon(CupertinoIcons.home),
+                        ), label: 'خانه'),
+                        BottomNavigationBarItem(icon: Padding(
+                          padding: EdgeInsets.only(top: 3),
+                          child: Icon(CupertinoIcons.cart,),
+                        ), label: 'سبد خرید'),
+                        BottomNavigationBarItem(
+                            icon: Padding(
+                              padding: EdgeInsets.only(top: 3),
+                              child: Icon(CupertinoIcons.person_fill),
+                            ), label: 'پروفایل'),
+                      ],
+                    ),
                   ),
-                )),
-            _navigator(
-                _profileKey,
-                profileIndex,
-                Center(
-                  child: Text('Profile Screen'),
-                ))
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: selectedScreenIndex,
-          onTap: (selectedTabIndex) {
-            setState(() {
-              _history.remove(selectedScreenIndex);
-              _history.add(selectedScreenIndex);
-              selectedScreenIndex = selectedTabIndex;
-            });
-          },
-          items: const [
-            BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: 'خانه'),
-            BottomNavigationBarItem(icon: Icon(CupertinoIcons.cart), label: 'سبد خرید'),
-            BottomNavigationBarItem(icon: Icon(CupertinoIcons.person_fill), label: 'پروفایل'),
+                ),
+              ),
+            ),
           ],
         ),
       ),

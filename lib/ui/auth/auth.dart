@@ -1,6 +1,9 @@
+import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:store/data/repo/auth_repository.dart';
+import 'package:store/ui/auth/auth_screen_components_transition.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -9,116 +12,132 @@ class AuthScreen extends StatefulWidget {
   State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
+  late AnimationController controller;
   bool? isInLoginMode;
   @override
   void initState() {
     isInLoginMode = true;
+    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 700));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    controller.forward();
     final ThemeData themeData = Theme.of(context);
     return Scaffold(
       backgroundColor: themeData.colorScheme.secondary,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/img/nike-white.png',
-                width: 120,
-              ),
-              Text(
-                isInLoginMode! ? 'خوش آمدید' : 'فرم ثبت نام',
-                style: themeData.textTheme.bodyLarge!.copyWith(
-                    color: themeData.colorScheme.onSecondary,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 25),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                isInLoginMode!
-                    ? 'لطفا وارد حساب کاربری خود شوید'
-                    : 'لطفا ایمیل و رمز عبور خود را وارد نمایید',
-                style: themeData.textTheme.bodyMedium!
-                    .copyWith(color: themeData.colorScheme.onSecondary, fontSize: 15),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Theme(
-                data: themeData.copyWith(
-                    colorScheme: themeData.colorScheme
-                        .copyWith(onSurface: themeData.colorScheme.onSecondary),
-                    inputDecorationTheme: InputDecorationTheme(
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9),
-                            borderSide: BorderSide(color: Colors.white)),
-                        labelStyle: themeData.textTheme.labelLarge!
-                            .copyWith(color: themeData.colorScheme.onSecondary),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)))),
-                child: Column(
-                  children: [
-                    TextField(
-                      style: themeData.textTheme.bodyMedium!.copyWith(
-                          color: themeData.colorScheme.onSecondary,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 15),
-                      decoration: InputDecoration(
-                          label: Text(
-                            'آدرس ایمیل',
-                          ),
-                          fillColor: themeData.colorScheme.onSecondary),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    _PasswordTextField(
-                      themeData: themeData,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    _ElevatedButton(
-                      themeData: themeData,
-                      isInLoginMode: isInLoginMode!,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          isInLoginMode! ? 'حساب کاربری ندارید؟' : 'حساب کاربری دارید؟',
-                          style: themeData.textTheme.bodyMedium!
-                              .copyWith(color: themeData.colorScheme.onSecondary),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        GestureDetector(
-                          onTap: () => setState(() {
-                            isInLoginMode = ! isInLoginMode!;
-                          }),
-                          child: Text(isInLoginMode! ? 'ثبت نام' : 'ورود',
-                              style: themeData.textTheme.bodyMedium!.copyWith(
-                                  color: themeData.colorScheme.onPrimary,
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: themeData.colorScheme.onPrimary)),
-                        )
-                      ],
-                    )
-                  ],
+      body: AuthScreenTransition(
+        controller: controller,
+        isInLoginMode: isInLoginMode,
+        themeData: themeData,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/img/nike-white.png',
+                  width: 120,
                 ),
-              ),
-            ],
+                Text(
+                  isInLoginMode! ? 'خوش آمدید' : 'فرم ثبت نام',
+                  style: themeData.textTheme.bodyLarge!.copyWith(
+                      color: themeData.colorScheme.onSecondary,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 25),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  isInLoginMode!
+                      ? 'لطفا وارد حساب کاربری خود شوید'
+                      : 'لطفا ایمیل و رمز عبور خود را وارد نمایید',
+                  style: themeData.textTheme.bodyMedium!
+                      .copyWith(color: themeData.colorScheme.onSecondary, fontSize: 15),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Theme(
+                  data: themeData.copyWith(
+                      colorScheme: themeData.colorScheme
+                          .copyWith(onSurface: themeData.colorScheme.onSecondary),
+                      inputDecorationTheme: InputDecorationTheme(
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(9),
+                              borderSide: BorderSide(color: Colors.white)),
+                          labelStyle: themeData.textTheme.labelLarge!
+                              .copyWith(color: themeData.colorScheme.onSecondary),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)))),
+                  child: Column(
+                    children: [
+                      TextField(
+                        style: themeData.textTheme.bodyMedium!.copyWith(
+                            color: themeData.colorScheme.onSecondary,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 15),
+                        decoration: InputDecoration(
+                            label: Text(
+                              'آدرس ایمیل',
+                            ),
+                            fillColor: themeData.colorScheme.onSecondary),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      _PasswordTextField(
+                        themeData: themeData,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _SignInSignUpButton(
+                        onTap: () {
+                          authRepository.signIn("test@gmail.com", "123456");
+                        },
+                        themeData: themeData,
+                        isInLoginMode: isInLoginMode!,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            isInLoginMode! ? 'حساب کاربری ندارید؟' : 'حساب کاربری دارید؟',
+                            style: themeData.textTheme.bodyMedium!
+                                .copyWith(color: themeData.colorScheme.onSecondary),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (controller.isCompleted) {
+                                return setState(() {
+                                  isInLoginMode = !isInLoginMode!;
+                                  controller.repeat();
+                                });
+                              }
+                            },
+                            child: Text(isInLoginMode! ? 'ثبت نام' : 'ورود',
+                                style: themeData.textTheme.bodyMedium!.copyWith(
+                                    color: themeData.colorScheme.onPrimary,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: themeData.colorScheme.onPrimary)),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -126,13 +145,16 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 }
 
-class _ElevatedButton extends StatelessWidget {
-  final bool isInLoginMode;
+class _SignInSignUpButton extends StatelessWidget {
+  final bool? isInLoginMode;
 
-  const _ElevatedButton({
+  final void Function()? onTap;
+
+  const _SignInSignUpButton({
     super.key,
     required this.themeData,
     required this.isInLoginMode,
+    this.onTap,
   });
 
   final ThemeData themeData;
@@ -155,7 +177,7 @@ class _ElevatedButton extends StatelessWidget {
                           foregroundColor:
                               MaterialStateProperty.all(themeData.colorScheme.secondary)))),
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: onTap ?? () {},
                   child: Text(
                     isInLoginMode! ? 'ورود' : 'ثبت نام',
                     style: themeData.textTheme.labelLarge!.copyWith(fontWeight: FontWeight.w600),

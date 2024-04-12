@@ -117,7 +117,7 @@ class HomeScreen extends StatelessWidget {
                                         return HorizontalListView(
                                           screenSize: screenSize,
                                           padding: padding,
-                                          title: '$screenSizeپربازدیدترین',
+                                          title: 'پربازدیدترین',
                                           products: state.popularProducts,
                                         );
                                     }
