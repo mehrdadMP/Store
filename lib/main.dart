@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:store/data/repo/auth_repository.dart';
 import 'package:store/mobile_screen.dart';
 import 'package:store/theme.dart';
 import 'package:store/ui/auth/auth.dart';
 import 'package:store/ui/root.dart';
 
 void main() {
+  authRepository.loadAuthInfo();
   runApp(const MyApp());
 }
 
@@ -41,6 +43,7 @@ class MyApp extends StatelessWidget {
             labelMedium: defaultTextStyle.copyWith(
                 fontWeight: FontWeight.w500, fontSize: 12, color: LightThemeColor.primaryColor)),
         colorScheme: ColorScheme.light(
+          secondaryContainer: LightThemeColor.secondaryContainer,
           primary: LightThemeColor.primaryColor,
           onPrimary: LightThemeColor.onPrimaryColor,
           secondary: LightThemeColor.secondaryColor,
@@ -56,10 +59,13 @@ class MyApp extends StatelessWidget {
           if (snapshot.data != null) {
             if (snapshot.data!.width > 0 && snapshot.data!.height > 0) {
               final Size mainScreenSize = snapshot.data!;
-              return Directionality(
+              return XiaomiNote9S(
+                home: Directionality(
                     textDirection: TextDirection.rtl,
-                    child: RootScreen(screenSize: MobileScreenSize.setXiaomiNote9sScreenSize()))
-                ;
+                    child: RootScreen(screenSize: MobileScreenSize.setXiaomiNote9sScreenSize())),
+                enableStatusBar: true,
+                textDirextion: TextDirection.rtl,
+              );
             } else {
               return Container();
             }

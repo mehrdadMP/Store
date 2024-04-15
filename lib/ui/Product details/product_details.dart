@@ -126,7 +126,10 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(left: 25,right: 25,bottom: 100,
+          Positioned(
+            left: 25,
+            right: 25,
+            bottom: 100,
             child: FloatingActionButton.extended(
                 onPressed: () {},
                 label: Text(

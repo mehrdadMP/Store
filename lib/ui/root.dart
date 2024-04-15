@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:store/ui/cart/cart.dart';
 import 'package:store/ui/home/home.dart';
 
 const int homeIndex = 0;
@@ -71,14 +72,7 @@ class _RootScreenState extends State<RootScreen> {
                   homeIndex,
                   HomeScreen(screenSize: widget.screenSize),
                 ),
-                _navigator(
-                    _cartKey,
-                    cartIndex,
-                    Center(
-                      child: Text(
-                        'Cart Screen${widget.screenSize}',
-                      ),
-                    )),
+                _navigator(_cartKey, cartIndex, Center(child: CartScreen())),
                 _navigator(
                     _profileKey,
                     profileIndex,
@@ -95,11 +89,13 @@ class _RootScreenState extends State<RootScreen> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     color: themeData.colorScheme.secondary),
-                child: ClipRRect(borderRadius: BorderRadius.circular(30),
-                         ///This [MediaQuery] widget lets add some padding at the bottom of 
-                         ///[BottomNavigationBar], set padding under it's [BottomNavigationBarItem]'s 
-                         ///[label]. If you set padding on [BottomNavigationBarItem]'s [Icon], it 
-                         ///will not set padding under it's label, just set padding on the top of Icon.
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+
+                  ///This [MediaQuery] widget lets add some padding at the bottom of
+                  ///[BottomNavigationBar], set padding under it's [BottomNavigationBarItem]'s
+                  ///[label]. If you set padding on [BottomNavigationBarItem]'s [Icon], it
+                  ///will not set padding under it's label, just set padding on the top of Icon.
                   child: MediaQuery(
                     data: MediaQueryData(viewPadding: EdgeInsets.all(3)),
                     child: BottomNavigationBar(
@@ -116,19 +112,26 @@ class _RootScreenState extends State<RootScreen> {
                         });
                       },
                       items: const <BottomNavigationBarItem>[
-                        BottomNavigationBarItem(icon: Padding(
-                          padding: EdgeInsets.only(top: 3),
-                          child: Icon(CupertinoIcons.home),
-                        ), label: 'خانه'),
-                        BottomNavigationBarItem(icon: Padding(
-                          padding: EdgeInsets.only(top: 3),
-                          child: Icon(CupertinoIcons.cart,),
-                        ), label: 'سبد خرید'),
+                        BottomNavigationBarItem(
+                            icon: Padding(
+                              padding: EdgeInsets.only(top: 3),
+                              child: Icon(CupertinoIcons.home),
+                            ),
+                            label: 'خانه'),
+                        BottomNavigationBarItem(
+                            icon: Padding(
+                              padding: EdgeInsets.only(top: 3),
+                              child: Icon(
+                                CupertinoIcons.cart,
+                              ),
+                            ),
+                            label: 'سبد خرید'),
                         BottomNavigationBarItem(
                             icon: Padding(
                               padding: EdgeInsets.only(top: 3),
                               child: Icon(CupertinoIcons.person_fill),
-                            ), label: 'پروفایل'),
+                            ),
+                            label: 'پروفایل'),
                       ],
                     ),
                   ),

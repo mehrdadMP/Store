@@ -16,8 +16,7 @@ class CommentList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<CommentListBloc>(
       create: (context) {
-        final bloc = CommentListBloc(
-            repository: commentRepository, productId: productId);
+        final bloc = CommentListBloc(repository: commentRepository, productId: productId);
         bloc.add(CommentListStarted());
         return bloc;
       },
@@ -43,8 +42,7 @@ class CommentList extends StatelessWidget {
                                     Expanded(
                                       child: TextScroll(
                                         textDirection: TextDirection.rtl,
-                                        velocity: Velocity(
-                                            pixelsPerSecond: Offset(15, 0)),
+                                        velocity: Velocity(pixelsPerSecond: Offset(15, 0)),
                                         pauseBetween: Duration(seconds: 5),
                                         intervalSpaces: 50,
                                         state.comments[index].title,
@@ -60,8 +58,7 @@ class CommentList extends StatelessWidget {
                                     ),
                                     Text(
                                       state.comments[index].date,
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
+                                      style: Theme.of(context).textTheme.bodySmall,
                                     )
                                   ],
                                 ),
@@ -78,17 +75,14 @@ class CommentList extends StatelessWidget {
                         )));
           } else if (state is CommentListLoading) {
             return SliverToBoxAdapter(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
+              child: SizedBox(height: 200,child: Center(child: SizedBox(child: CircularProgressIndicator()))),
             );
           } else if (state is CommentListError) {
             return SliverToBoxAdapter(
               child: AppErrorWidget(
                 exception: state.exception,
                 onPressed: () {
-                  return BlocProvider.of<CommentListBloc>(context)
-                      .add(CommentListStarted());
+                  return BlocProvider.of<CommentListBloc>(context).add(CommentListStarted());
                 },
               ),
             );

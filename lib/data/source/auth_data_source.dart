@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:store/data/auth_data.dart';
 import 'package:store/data/common/constants.dart';
 import 'package:store/data/common/response_validator.dart';
@@ -14,9 +15,16 @@ class AuthRemoteDataSource with httpResponseValidator implements IAuthDataSource
 
   AuthRemoteDataSource(this.httpClient);
   @override
-  Future<AuthData> refreshToken(String refreshToken) {
-    // TODO: implement refreshToken
-    throw UnimplementedError();
+  Future<AuthData> refreshToken(String refreshToken) async {
+    final response = await httpClient.post("auth/token", data: {
+      "grant_type": "refresh_token",
+      "refresh_token" : refreshToken,
+      "client_id": 2,
+      "client_secret": Constants.clientSecret,
+    });
+
+    validateResponse(response);
+    return AuthData(response.data["access_token"], response.data["refresh_token"]);
   }
 
   @override
@@ -34,8 +42,15 @@ class AuthRemoteDataSource with httpResponseValidator implements IAuthDataSource
   }
 
   @override
-  Future<AuthData> signUp(String username, String password) {
-    // TODO: implement signUp
-    throw UnimplementedError();
+  Future<AuthData> signUp(String username, String password) async {
+    try {
+      final response = await httpClient
+          .post("user/register", queryParameters: {"email": username, "password": password});
+      validateResponse(response);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+
+    return signIn(username, password);
   }
 }
