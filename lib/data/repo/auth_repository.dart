@@ -8,6 +8,7 @@ final authRepository = AuthRepository(AuthRemoteDataSource(httpClient));
 
 abstract class IAuthRepository {
   Future<void> signIn(String username, String password);
+  Future<void> signOut();
   Future<void> signUp(String username, String password);
   Future<void> refreshToken();
 }
@@ -23,12 +24,14 @@ class AuthRepository implements IAuthRepository {
   Future<void> signIn(String username, String password) async {
     final AuthData authData = await dataSource.signIn(username, password);
     _persistAuthTokens(authData);
+    loadAuthInfo();
   }
 
   @override
   Future<void> signUp(String username, String password) async {
     final AuthData authData = await dataSource.signUp(username, password);
     _persistAuthTokens(authData);
+    loadAuthInfo();
   }
 
   @override
@@ -48,8 +51,16 @@ class AuthRepository implements IAuthRepository {
     final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     final String accessToken = sharedPreferences.getString("access_token") ?? '';
     final String refreshToken = sharedPreferences.getString("refresh_token") ?? '';
+    //debugPrint(accessToken);
     if (accessToken.isNotEmpty && refreshToken.isNotEmpty) {
       authChangeNotifier.value = AuthData(accessToken, refreshToken);
     }
+  }
+
+  @override
+  Future<void> signOut() async {
+    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.clear();
+    authChangeNotifier.value = null;
   }
 }

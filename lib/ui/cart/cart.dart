@@ -21,6 +21,13 @@ class CartScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(isAuthenticated ? 'خوش آمدید' : 'لطفا وارد حساب کاربری خود شوید'),
+                isAuthenticated
+                    ? ElevatedButton(
+                        onPressed: () {
+                          authRepository.signOut();
+                        },
+                        child: Text('خروج از حساب'))
+                    : Container(),
                 if (!isAuthenticated)
                   ElevatedButton(
                       onPressed: () {

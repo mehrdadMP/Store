@@ -9,6 +9,8 @@ sealed class AuthState extends Equatable {
 
 final class AuthInitial extends AuthState {
   const AuthInitial(super.isLoginMode);
+  @override
+  List<Object> get props => [isLoginMode];
 }
 
 final class AuthLoading extends AuthState {

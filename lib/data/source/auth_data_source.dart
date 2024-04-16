@@ -18,7 +18,7 @@ class AuthRemoteDataSource with httpResponseValidator implements IAuthDataSource
   Future<AuthData> refreshToken(String refreshToken) async {
     final response = await httpClient.post("auth/token", data: {
       "grant_type": "refresh_token",
-      "refresh_token" : refreshToken,
+      "refresh_token": refreshToken,
       "client_id": 2,
       "client_secret": Constants.clientSecret,
     });
@@ -43,14 +43,9 @@ class AuthRemoteDataSource with httpResponseValidator implements IAuthDataSource
 
   @override
   Future<AuthData> signUp(String username, String password) async {
-    try {
-      final response = await httpClient
-          .post("user/register", queryParameters: {"email": username, "password": password});
-      validateResponse(response);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-
+    final response =
+        await httpClient.post("user/register", data: {"email": username, "password": password});
+    validateResponse(response);
     return signIn(username, password);
   }
 }
