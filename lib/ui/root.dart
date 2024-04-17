@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:store/ui/cart/cart.dart';
 import 'package:store/ui/home/home.dart';
 
-const int homeIndex = 0;
-const int cartIndex = 1;
+const int cartIndex = 0;
+const int homeIndex = 1;
 const int profileIndex = 2;
 
 class RootScreen extends StatefulWidget {
@@ -67,12 +67,12 @@ class _RootScreenState extends State<RootScreen> {
             IndexedStack(
               index: selectedScreenIndex,
               children: [
+                _navigator(_cartKey, cartIndex, Center(child: CartScreen())),
                 _navigator(
                   _homeKey,
                   homeIndex,
                   HomeScreen(screenSize: widget.screenSize),
                 ),
-                _navigator(_cartKey, cartIndex, Center(child: CartScreen())),
                 _navigator(
                     _profileKey,
                     profileIndex,
@@ -115,17 +115,17 @@ class _RootScreenState extends State<RootScreen> {
                         BottomNavigationBarItem(
                             icon: Padding(
                               padding: EdgeInsets.only(top: 3),
-                              child: Icon(CupertinoIcons.home),
-                            ),
-                            label: 'خانه'),
-                        BottomNavigationBarItem(
-                            icon: Padding(
-                              padding: EdgeInsets.only(top: 3),
                               child: Icon(
                                 CupertinoIcons.cart,
                               ),
                             ),
                             label: 'سبد خرید'),
+                        BottomNavigationBarItem(
+                            icon: Padding(
+                              padding: EdgeInsets.only(top: 3),
+                              child: Icon(CupertinoIcons.home),
+                            ),
+                            label: 'خانه'),
                         BottomNavigationBarItem(
                             icon: Padding(
                               padding: EdgeInsets.only(top: 3),

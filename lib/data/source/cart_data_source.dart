@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:store/data/cart_item.dart';
 import 'package:store/data/cart_response.dart';
+import 'package:store/data/common/response_validator.dart';
 
 abstract class ICartDataSource {
   Future<CartResponse> addProductToCart(int productId);
@@ -17,7 +18,9 @@ class CartRemoteDataSource implements ICartDataSource {
   @override
   Future<CartResponse> addProductToCart(int productId) async {
     final response = await httpClient.post('cart/add', data: {"product_id": productId});
-    return CartResponse.fronJason(response.data);
+    validateResponse(response);
+    final cartResponse = CartResponse.fronJason(response.data);
+    return cartResponse;
   }
 
   @override

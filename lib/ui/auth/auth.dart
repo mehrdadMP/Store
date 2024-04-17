@@ -36,8 +36,12 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
               if (state is AuthSuccess) {
                 Navigator.of(context).pop();
               } else if (state is AuthError) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Center(child: Text(state.exception.message))));
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Center(
+                        child: Text(
+                  state.exception.message,
+                  textDirection: TextDirection.rtl,
+                ))));
               }
             });
             bloc.add(AuthScreenStarted());
