@@ -21,4 +21,7 @@ final class ProductAddToCartButtonError extends ProductDetailsState {
   List<Object> get props => [exception];
 }
 
-final class ProductAddToCartButtonSuccess extends ProductDetailsState {}
+final class ProductAddToCartButtonSuccess extends ProductDetailsState {
+  final CartResponse response;
+  ProductAddToCartButtonSuccess(this.response);
+}

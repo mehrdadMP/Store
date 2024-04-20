@@ -45,7 +45,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Center(
               child: Text(
-                'با موفقیت به سبد خرید شما اضافه شد.',
+                state.response.message!,
                 textDirection: TextDirection.rtl,
               ),
             )));

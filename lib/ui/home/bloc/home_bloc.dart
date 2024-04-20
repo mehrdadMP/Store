@@ -40,7 +40,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       } catch (e) {
         emit(
           HomeError(
-            exception: e is AppException ? e : AppException(),
+            exception: e is AppException ? e : AppException(message: e.toString()),
           ),
         );
       }

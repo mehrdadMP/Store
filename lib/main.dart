@@ -59,12 +59,9 @@ class MyApp extends StatelessWidget {
           if (snapshot.data != null) {
             if (snapshot.data!.width > 0 && snapshot.data!.height > 0) {
               final Size mainScreenSize = snapshot.data!;
-              return XiaomiNote9S(
-                enableStatusBar: true,
-                home: Directionality(
+              return Directionality(
                       textDirection: TextDirection.rtl,
-                      child: RootScreen(screenSize: mainScreenSize)), textDirextion: TextDirection.rtl,
-              );
+                      child: RootScreen(screenSize: mainScreenSize));
             } else {
               return Container();
             }

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:store/data/cart_item.dart';
 import 'package:store/data/cart_response.dart';
 import 'package:store/data/common/response_validator.dart';
@@ -11,7 +12,7 @@ abstract class ICartDataSource {
   Future<List<CartItemEntity>> getAll();
 }
 
-class CartRemoteDataSource implements ICartDataSource {
+class CartRemoteDataSource with httpResponseValidator implements ICartDataSource {
   final Dio httpClient;
 
   CartRemoteDataSource(this.httpClient);
@@ -19,8 +20,7 @@ class CartRemoteDataSource implements ICartDataSource {
   Future<CartResponse> addProductToCart(int productId) async {
     final response = await httpClient.post('cart/add', data: {"product_id": productId});
     validateResponse(response);
-    final cartResponse = CartResponse.fronJason(response.data);
-    return cartResponse;
+    return CartResponse.fromJason(response.data);
   }
 
   @override

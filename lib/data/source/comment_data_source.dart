@@ -6,9 +6,7 @@ abstract class ICommentDataSource {
   Future<List<CommentEntity>> getAll({required int productId});
 }
 
-class CommentRemoteDataSource
-    with httpResponseValidator
-    implements ICommentDataSource {
+class CommentRemoteDataSource with httpResponseValidator implements ICommentDataSource {
   final Dio httpClient;
 
   CommentRemoteDataSource(this.httpClient);

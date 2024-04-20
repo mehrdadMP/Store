@@ -28,7 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthInitial(isLoginMode));
         }
       } catch (e) {
-        emit(AuthError(isLoginMode,AppException()));
+        emit(AuthError(isLoginMode,AppException(message: e.toString())));
       }
     });
   }
