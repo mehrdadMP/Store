@@ -4,6 +4,9 @@
 
 A simple shoe store mobile application built with Flutter that allows users to browse available shoes, view product details, read reviews, and add items to their cart.
 
+![Group 1](https://github.com/user-attachments/assets/311a1f75-e0e7-490b-a72c-a28258cda5be)
+
+
 ## Features
 **Home Screen:** Displays a list of available shoes in the store
 
