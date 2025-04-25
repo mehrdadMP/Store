@@ -11,6 +11,7 @@ import 'package:store/data/repo/cart_repository.dart';
 import 'package:store/theme.dart';
 import 'package:store/ui/Product%20details/bloc/product_details_bloc.dart';
 import 'package:store/ui/Product%20details/comment/comment_list.dart';
+import 'package:store/ui/root.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final Size screenSize;
@@ -24,13 +25,14 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  final GlobalKey<ScaffoldMessengerState> _scaffoledMessengerKey = GlobalKey();
   StreamSubscription<ProductDetailsState>? streamSubscription;
   @override
   void dispose() {
     /// Due to prevent memory leak cause of closing [ProductDetailsCcreen], must close the
     /// subscription.
     streamSubscription?.cancel();
-
+    _scaffoledMessengerKey.currentState?.dispose();
     super.dispose();
   }
 
@@ -42,7 +44,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         final ProductDetailsBloc bloc = ProductDetailsBloc(cartRepository);
         bloc.stream.listen((state) {
           if (state is ProductAddToCartButtonSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            ScaffoldMessenger.of(context). showSnackBar(SnackBar(
                 content: Center(
               child: Text(
                 state.response.message!,
@@ -62,6 +64,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         return bloc;
       },
       child: Scaffold(
+        key: _scaffoledMessengerKey,
         body: Stack(
           children: [
             Directionality(

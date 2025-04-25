@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:store/data/repo/auth_repository.dart';
 import 'package:store/mobile_screen.dart';
 import 'package:store/theme.dart';
-import 'package:store/ui/auth/auth.dart';
 import 'package:store/ui/root.dart';
 
 void main() {
@@ -30,6 +29,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        snackBarTheme: SnackBarThemeData(
+            contentTextStyle: defaultTextStyle.copyWith(color: LightThemeColor.onSurfaceColor)),
         textTheme: TextTheme(
             bodyMedium: defaultTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 13),
             bodyLarge: defaultTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 20),
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
           onPrimary: LightThemeColor.onPrimaryColor,
           secondary: LightThemeColor.secondaryColor,
           onSecondary: Colors.white,
+          onBackground: LightThemeColor.onBackground
         ),
         useMaterial3: true,
       ),
@@ -59,9 +61,13 @@ class MyApp extends StatelessWidget {
           if (snapshot.data != null) {
             if (snapshot.data!.width > 0 && snapshot.data!.height > 0) {
               final Size mainScreenSize = snapshot.data!;
-              return Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: RootScreen(screenSize: mainScreenSize));
+              return XiaomiNote9S(debugShowCheckedModeBanner: false,
+                home: Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: RootScreen(screenSize: MobileScreenSize.setXiaomiNote9sScreenSize())),
+                enableStatusBar: true,
+                textDirextion: TextDirection.rtl,
+              );
             } else {
               return Container();
             }

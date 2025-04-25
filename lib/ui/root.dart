@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:store/ui/cart/cart.dart';
 import 'package:store/ui/home/home.dart';
+import 'package:store/ui/profile/profile.dart';
 
 const int cartIndex = 0;
 const int homeIndex = 1;
 const int profileIndex = 2;
+
+//GlobalKey<ScaffoldMessengerState> rootScreenScaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
 class RootScreen extends StatefulWidget {
   final Size screenSize;
@@ -45,6 +48,12 @@ class _RootScreenState extends State<RootScreen> {
   }
 
   @override
+  void dispose() {
+    //rootScreenScaffoldKey.currentState?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     return PopScope(
@@ -62,12 +71,19 @@ class _RootScreenState extends State<RootScreen> {
         }
       },
       child: Scaffold(
+        //key: rootScreenScaffoldKey,
         body: Stack(
           children: [
             IndexedStack(
               index: selectedScreenIndex,
               children: [
-                _navigator(_cartKey, cartIndex, Center(child: CartScreen())),
+                _navigator(
+                    _cartKey,
+                    cartIndex,
+                    Center(
+                        child: CartScreen(
+                      screenSize: widget.screenSize,
+                    ))),
                 _navigator(
                   _homeKey,
                   homeIndex,
@@ -77,7 +93,7 @@ class _RootScreenState extends State<RootScreen> {
                     _profileKey,
                     profileIndex,
                     Center(
-                      child: Text('Profile Screen'),
+                      child: ProfileScreen(screenSize: widget.screenSize),
                     ))
               ],
             ),

@@ -18,7 +18,7 @@ class ProductRemoteDataSource
   Future<List<ProductEntity>> getAll(int sort) async {
     final response = await httpClient.get('product/list?sort=$sort');
     validateResponse(response);
-
+ 
     final List<ProductEntity> productsList = <ProductEntity>[];
     for (var element in (response.data as List)) {
       productsList.add(ProductEntity.fromJason(element));

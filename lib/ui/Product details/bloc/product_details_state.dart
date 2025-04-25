@@ -22,6 +22,6 @@ final class ProductAddToCartButtonError extends ProductDetailsState {
 }
 
 final class ProductAddToCartButtonSuccess extends ProductDetailsState {
-  final CartResponse response;
+  final AddToCartResponse response;
   ProductAddToCartButtonSuccess(this.response);
 }

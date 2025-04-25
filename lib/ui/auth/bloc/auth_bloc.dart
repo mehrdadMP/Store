@@ -21,14 +21,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             emit(AuthSuccess(isLoginMode));
           } else {
             await authRepository.signUp(event.username, event.password);
-            emit(AuthSuccess(isLoginMode));        
+            emit(AuthSuccess(isLoginMode));
           }
         } else if (event is AuthModeChangeClicked) {
           isLoginMode = !isLoginMode;
           emit(AuthInitial(isLoginMode));
         }
       } catch (e) {
-        emit(AuthError(isLoginMode,AppException(message: e.toString())));
+        emit(AuthError(isLoginMode, AppException(message: e.toString())));
       }
     });
   }
