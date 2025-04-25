@@ -70,3 +70,25 @@ A simple shoe store mobile application built with Flutter that allows users to b
    ```  
 
 ---
+
+## Dependencies
+- **cupertino_icons:** ^1.0.2
+- **dio:** ^5.4.1
+- **flutter_bloc:** ^8.1.6
+- **equatable:** ^2.0.5
+- **cached_network_image:** ^3.3.0
+- **cached_network_image:** ^3.3.1
+- **smooth_page_indicator:** ^1.1.0
+- **text_scroll:** ^0.2.0
+- **shared_preferences:** ^2.2.3
+- **bloc:** ^8.1.4
+
+---
+ 
+
+### Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss proposed changes.
+
+### License  
+MIT © 2023 BlogClub
+
