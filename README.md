@@ -13,16 +13,16 @@ A simple shoe store mobile application built with Flutter that allows users to b
 
 **Cart Functionality:** Add/remove items to/from shopping cart
 
-User Profile: Basic user profile section
+**User Profile:** Basic user profile section
 
-Screens
-Home Page
+## Screens
+**Home Page**
 
-Product listings with images
+**Product listings with images**
 
-Quick view of product details
+**Quick view of product details**
 
-"Add to Cart" button for each item
+**"Add to Cart" button for each item*
 
 Cart Page
 
