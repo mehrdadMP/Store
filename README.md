@@ -18,34 +18,55 @@ A simple shoe store mobile application built with Flutter that allows users to b
 ## Screens
 **Home Page**
 
-**Product listings with images**
+**Product listings with images*
 
-**Quick view of product details**
+**Quick view of product details*
 
 **"Add to Cart" button for each item*
 
-Cart Page
+**Cart Page*
 
-List of selected items
+**List of selected items*
 
-Total price calculation
+**Total price calculation*
 
-Quantity adjustment
+**Quantity adjustment*
 
-Checkout option
+**Checkout option*
 
-Profile Page
+**Profile Page*
 
-User information
+**User information*
 
-Order history
+**Order history*
 
-Settings
+**Settings*
 
-Getting Started
-Prerequisites
-Flutter SDK (latest stable version)
+**Getting Started*
 
-Dart SDK
+## Prerequisites
+**Flutter SDK (latest stable version)**
 
-Android Studio or VS Code with Flutter extension
+**Dart SDK**
+
+**Android Studio or VS Code with Flutter extension**
+
+## Installation
+
+1. Ensure Flutter is installed (minimum v3.0.0)
+
+#### **How to Run**  
+1. Clone the repo:  
+   ```bash
+   git clone https://github.com/mehrdadMP/Blog_Club.git
+   ```  
+2. Install dependencies:  
+   ```bash
+   flutter pub get
+   ```  
+3. Run on emulator/device:  
+   ```bash
+   flutter run
+   ```  
+
+---
